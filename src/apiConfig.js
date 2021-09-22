@@ -1,3 +1,3 @@
-const apiUrl = 'https://api.openweathermap.org/data/2.5'
-const apiKey = 'c1d51f580fdc52b711600df2be150360'
+const apiUrl = 'https://api.nasa.gov/planetary/apod?api_key='
+const apiKey = "lFjehNkRjA2bTxD27qWJF9Tjit97Wij1oDlB95vW"
 export { apiUrl, apiKey }

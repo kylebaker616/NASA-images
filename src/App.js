@@ -1,82 +1,89 @@
-import React, { useState }from 'react'
-// import { Route } from 'react-router-dom'
-import './App.css';
-import { apiUrl, apiKey } from './apiConfig'
+import React, { Component, Fragment } from 'react'
+import { apiKey, apiUrl } from './apiConfig'
+// import Nav from './components/Nav'
+import axios from 'axios'
+import './index.css'
+// const apiKey = process.env.REACT_APP_NASA_KEY
 
-function App() {
-  const [query, setQuery] = useState('')
-  const [weather, setWeather] = useState({})
-  
-  const search = (event) => {
-    if (event.key === 'Enter') {
-       fetch(`${apiUrl}/weather?q=${query}&units=imperial&APPID=${apiKey}`)
-       .then((res) => res.json())
-       .then((res) => {
-         setWeather(res)
-        setQuery('')
-        console.log(res)
-        })
+
+class App extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      photo: {},
+      liked: false,
     }
   }
 
-  const dateGetter = (d) => {
-  const months = [
-		'January',
-		'February',
-		'March',
-		'April',
-		'May',
-		'June',
-		'July',
-		'August',
-		'September',
-		'October',
-		'November',
-		'December',
-	]
-	const days = [
-		'Sunday',
-		'Monday',
-		'Tuesday',
-		'Wednesday',
-		'Thursday',
-		'Friday',
-		'Saturday',
-	]
- const day = days[d.getDay()]
- const date = d.getDate()
- const month = months[d.getMonth()]
- const year = d.getFullYear()
- return `${day}, ${month} ${date} ${year}` 
-}
-  return (
-		<div className={(typeof weather.main != 'undefined') ? ((weather.weather[0].main === 'Clouds') ? 'app-cloudy' : 'app') : 'app-base'}>
-			<main>
-				<div className='search-bar'>
-					<input type='text'
-           className='search-input'
-            placeholder='Search'
-            onChange={(event) => setQuery(event.target.value)}
-            value={query}
-            onKeyPress={search}
-            />
-				</div>
-        {(typeof weather.main != 'undefined') ? (
-			<div>
-				<div className='location-box'>
-					<div className='location'>{weather.name}, {weather.sys.country}</div>
-					<br></br>
-					<div className='date'>{dateGetter(new Date())}</div>
-					<div className='weather-box'>
-            <div className="temperature">{Math.round(weather.main.temp)}°F</div>
-						<div className='weather'>{weather.weather[0].main}</div>
+
+  componentDidMount () {
+	    const getPhoto = () => {
+			return axios({
+				url: apiUrl + apiKey,
+				method: 'GET',
+			})
+		}
+		getPhoto()
+		  .then((res) => {
+			  console.log(res)
+			  this.setState({ photo: res.data})})
+		console.log(this.state.photo, 'aa')
+	}
+	handleClick = (event) => {
+		event.preventDefault()
+		const { liked } = this.state
+		this.setState({
+			liked: !liked
+		})
+	}
+
+  render () {
+     let buttonJsx
+	 if (!this.state.liked) {
+		 buttonJsx = (
+				<button className='disliked' onClick={this.handleClick}>
+					<strong>like</strong>
+				</button>
+			)
+	 } else {
+		 buttonJsx = (
+				<button className='liked' onClick={this.handleClick}>
+					<strong>dislike</strong>
+				</button>
+			)
+	 }
+     if (this.state.photo === {}) return <div>Loading...</div>
+    return (
+			<Fragment>
+				<div className='nasa-photo'>
+					{this.state.photo.media_type === 'image' ? (
+						<img
+							src={this.state.photo.url}
+							alt={this.state.photo.title}
+							className='photo'
+						/>
+					) : (
+						<iframe
+							title='space-video'
+							src={this.state.photo.url}
+							frameBorder='0'
+							gesture='media'
+							allow='encrypted-media'
+							allowFullScreen
+							className='photo'
+						/>
+					)}
+					<div>
+						
+						<h1>{this.state.photo.title}</h1>
+						<p className='date'>{this.state.photo.date}</p>
+						<p className='explanation'>{this.state.photo.explanation}</p>
 					</div>
+					{buttonJsx}
 				</div>
-			</div>
-				) : ('') }
-			</main>
-		</div>
-	)
+			</Fragment>
+		)
+  }
 }
 
-export default App;
+export default App
