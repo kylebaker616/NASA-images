@@ -7,85 +7,53 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   /* background-color: aqua; */
 }
-.app {
-  background-image: url('./clear.jpeg');
-  background-size: cover;
-  background-position: bottom;
-  transition: 0.4;
+.nasa-photo {
+  display: flex;
+  padding: 40px;
+  margin: 0 auto;
+  max-height: 100%;
 }
-.app-cloudy {
-  background-image: url('./clouds.jpeg');
-  background-size: cover;
-  background-position: bottom;
-  transition: 0.4;
+
+.nasa-photo img {
+  width: 50%;
+  margin-right: 50px;
+  object-fit: contain;
+  max-height: 80vh;
 }
-.app-base {
-  background-image: url('./base.jpeg');
-  background-size: cover;
-  background-position: bottom;
-  transition: 0.4;
+
+.nasa-photo h1 {
+  margin-top: 0;
+  margin-bottom: 0;
 }
-main {
-  min-height: 100vh;
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba (0, 0, 0, 0.75));
-  padding: 25px;
+
+.nasa-photo .date {
+  margin-top: 0;
+  margin-bottom: 30px;
 }
-.search-bar {
-  width: 100%;
-  margin: 0 0 75px;
+
+.nasa-photo .explanation {
+  color: black;
 }
-.search-bar .search-input {
-display: block;
-width: 100%;
-padding: 15px;
-appearance: none;
-background: none;
-border: none;
-outline: none;
-background-color: rgba(255, 255, 255, 0.5);
-border-radius: 20px;
-box-shadow: 0px 5px rgba(0, 0, 0, 0.2);
-color: #313131;
-font-size: 20px;
-transition: 0.4s ease;
+@media (max-width: 1280px) {
+  .nasa-photo {
+    display: block;
+  }
+
+  .nasa-photo img {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 30px;
+  }
 }
-.search-bar .search-input:focus {
-background-color: rgba(255, 255, 255, 0.75)
-}
-.location-box .location {
-  color: #FFF;
-  font-size: 32px;
-  font-weight: 500;
-  text-align: center;
-  text-shadow: 3px 3px rgba(50, 50 ,70, 0.5)
-}
-.location-box .date {
-  color: #FFF;
-  font-size: 20px;
-  font-weight: 300;
-  font-style: italic;
-  text-align: center;
-}
-.weather-box {
-  text-align: center;
-}
-.weather-box .temperature {
-  position: relative;
-  display:inline-block;
-  margin: 30px auto;
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
-  padding: 15px 25px;
-  color: #FFF;
-  font-size: 100px;
-  font-weight: 900; 
-  text-shadow: 3px 6px rgba(50, 50, 70, 0.5);
-  text-align: center;
-  box-shadow: 3px 6px rgba(0, 0, 0, 0.2);
-}
-.weather-box .weather {
+.liked {
+  border-radius: 10px;
+  background-color: red;
   color: white;
-  font-size: 40px;
-  font-weight: 700;
-  text-shadow: 3px 3px rgba(50, 50, 70, 0.5)
+  width: 50px;
+}
+.disliked {
+  border-radius: 10px;
+  background-color: blue;
+  color: white;
+  width: 50px
 }
